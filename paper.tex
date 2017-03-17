@@ -38,11 +38,12 @@ Automatic speech transcription also benefits from speaker diarization to address
 Resulting augmented (or ``rich'') transcription can be very useful for multimedia documents structuring and indexing.
 
 Thanks to open initiatives such as the series of NIST ``Rich Transcription'' evaluations~\cite{Fiscus2006}, or ESTER~\cite{Galliano2005} and  ETAPE~\cite{Gravier2012} benchmarks, the state-of-the-art for speaker diarization has achieved significant improvement since 2000.
-Despite addressing the same task, these initiatives used different evaluation metrics, different implementations of these metrics~\cite{NIST-RT03, Galibert2013}, all provided as standalone (C or Lua) command line tools.
+Despite addressing the same task, these initiatives used different evaluation metrics, different implementations of these metrics~\cite{NIST-RT03, Galibert2013}, all provided as standalone (Perl or Lua) command line tools.
 
 In this paper, we introduce \metrics{}, an open-source Python library for reproducible evaluation, diagnostic, and error analysis of speaker diarization systems.
 Python is currently being adopted by a growing number of researchers in speaker identification~\cite{sidekit, Bob2012}, machine learning~\cite{scikit-learn}, or deep learning~\cite{tensorflow2015-whitepaper}.
-Being able to directly evaluate speaker diarization using the computer language in which systems are developed is therefore very convenient.
+Evaluating speaker diarization using the same language as the one used for developing, training, and testing a system has several advantages.
+In particular, it may be very convenient when the actual evaluation metric serves as a cost function to minimize during training.
 
 \begin{figure*}[htb]
   \centering
@@ -51,7 +52,7 @@ Being able to directly evaluate speaker diarization using the computer language 
   \label{fig:pipeline}
 \end{figure*}
 
-As introduced in Section~\ref{sec:reproducible_evaluation}, \metrics{} can be used as a command line tool to compute the \emph{de facto} standard \emph{diarization error rate} NIST implementation.
+For the sake of completeness, \metrics{} can also be used as a command line tool (described in Section~\ref{sec:reproducible_evaluation}) to compute the \emph{de facto} standard \emph{diarization error rate} NIST implementation.
 Inspired by Bob~\cite{Bob2012} database package paradigm, \metrics{} rely on standardized database interfaces to ensure reproducibility and fair comparison of speaker diarization systems.
 It also provides a large collections of additional evaluation metrics (summarized in Figure~\ref{fig:pipeline}) that can be used for diagnostic purposes, either using the command line tool, or directly as a Python module.
 Those additional metrics are described, discussed, and compared in Section~\ref{sec:diagnostic}.
