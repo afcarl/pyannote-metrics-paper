@@ -7,6 +7,13 @@
 \usepackage{balance}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand*\pyannote{\texttt{\footnotesize{pyannote}}}
+\newcommand*\metrics{\texttt{\footnotesize{pyannote.metrics}}}
+\newcommand*\core{\texttt{\footnotesize{pyannote.core}}}
+\newcommand*\parser{\texttt{\footnotesize{pyannote.parser}}}
+\newcommand*\database{\texttt{\footnotesize{pyannote.database}}}
+\newcommand*\github{\texttt{\footnotesize{http://pyannote.github.io}}}
+\newcommand*\cli{\texttt{\footnotesize{pyannote.metrics.py}}}
 
 \title{\texttt{\Large{pyannote.metrics}}: a toolkit for reproducible evaluation,\\ diagnostic, and error analysis of speaker diarization systems}
 \name{Herv\'{e} Bredin}
@@ -19,8 +26,8 @@
 \maketitle
 %
 \begin{abstract}
-\texttt{pyannote.metrics} is an open-source Python library aimed at researchers working in the wide area of speaker diarization.
-It provides a command line interface (CLI) to improve reproducibility and comparison of speaker diarization research results. Through its application programming interface (API), a large set of evaluation metrics is available for diagnostic purposes of all modules of typical speaker diarization pipelines (speech activity detection, speaker change detection, clustering, and identification). Finally, thanks to visualization capabilities, we show that it can also be used for detailed error analysis purposes. \texttt{pyannote.metrics} can be downloaded from \url{pyannote.github.io}.
+\metrics{} is an open-source Python library aimed at researchers working in the wide area of speaker diarization.
+It provides a command line interface (CLI) to improve reproducibility and comparison of speaker diarization research results. Through its application programming interface (API), a large set of evaluation metrics is available for diagnostic purposes of all modules of typical speaker diarization pipelines (speech activity detection, speaker change detection, clustering, and identification). Finally, thanks to visualization capabilities, we show that it can also be used for detailed error analysis purposes. \metrics{} can be downloaded from \github{}.
 \end{abstract}
 \noindent\textbf{Index Terms}: evaluation, speaker diarization, reproducible research, open-source software
 
@@ -33,7 +40,7 @@ Resulting augmented (or ``rich'') transcription can be very useful for multimedi
 Thanks to open initiatives such as the series of NIST ``Rich Transcription'' evaluations~\cite{Fiscus2006}, or ESTER~\cite{Galliano2005} and  ETAPE~\cite{Gravier2012} benchmarks, the state-of-the-art for speaker diarization has achieved significant improvement since 2000.
 Despite addressing the same task, these initiatives used different evaluation metrics, different implementations of these metrics~\cite{NIST-RT03, Galibert2013}, all provided as standalone (C or Lua) command line tools.
 
-In this paper, we introduce \texttt{pyannote.metrics}, an open-source Python library for reproducible evaluation, diagnostic, and error analysis of speaker diarization systems.
+In this paper, we introduce \metrics{}, an open-source Python library for reproducible evaluation, diagnostic, and error analysis of speaker diarization systems.
 Python is currently being adopted by a growing number of researchers in speaker identification~\cite{sidekit, Bob2012}, machine learning~\cite{scikit-learn}, or deep learning~\cite{tensorflow2015-whitepaper}.
 Being able to directly evaluate speaker diarization using the computer language in which systems are developed is therefore very convenient.
 
@@ -44,11 +51,11 @@ Being able to directly evaluate speaker diarization using the computer language 
   \label{fig:pipeline}
 \end{figure*}
 
-As introduced in Section~\ref{sec:reproducible_evaluation}, \texttt{pyannote.metrics} can be used as a command line tool to compute the \emph{de facto} standard \emph{diarization error rate} NIST implementation.
-Inspired by Bob~\cite{Bob2012} database package paradigm, \texttt{pyannote.metrics} rely on standardized database interfaces to ensure reproducibility and fair comparison of speaker diarization systems.
+As introduced in Section~\ref{sec:reproducible_evaluation}, \metrics{} can be used as a command line tool to compute the \emph{de facto} standard \emph{diarization error rate} NIST implementation.
+Inspired by Bob~\cite{Bob2012} database package paradigm, \metrics{} rely on standardized database interfaces to ensure reproducibility and fair comparison of speaker diarization systems.
 It also provides a large collections of additional evaluation metrics (summarized in Figure~\ref{fig:pipeline}) that can be used for diagnostic purposes, either using the command line tool, or directly as a Python module.
 Those additional metrics are described, discussed, and compared in Section~\ref{sec:diagnostic}.
-Finally, another strength of \texttt{pyannote.metrics} lies in its advanced visualization and error analysis features.
+Finally, another strength of \metrics{} lies in its advanced visualization and error analysis features.
 This is introduced in Section~\ref{sec:visualization}.
 
 \section{Reproducible evaluation}
@@ -57,7 +64,7 @@ This is introduced in Section~\ref{sec:visualization}.
 There are two main issues that may arise with results reported in the literature.
 Firstly, even though the same public datasets are used, the actual evaluation protocol may differ slightly from one paper to another.
 Secondly, the implementation of the reported evaluation metrics may also differ.
-The first objective of the \texttt{pyannote.metrics} library is to address these two problems, and provide a convenient way for researchers to evaluate their approaches in a reproducible and comparable manner.
+The first objective of the \metrics{} library is to address these two problems, and provide a convenient way for researchers to evaluate their approaches in a reproducible and comparable manner.
 Figure~\ref{vrb:cli} shows an example use of the command line interface that is provided to solve this problem.
 
 \begin{figure*}[htb]
@@ -82,26 +89,25 @@ TOTAL                                     23.27     88.18       84.55  14721.65 
 \label{vrb:cli}
 \end{figure*}
 
-\subsection{Multiple tasks}
+\subsection{Tasks}
 
-The first positional argument (\emph{e.g.} \texttt{diarization} in Figure~\ref{vrb:cli}) is a flag indicating which task should be evaluated.
-Apart for the \texttt{diarization} flag that is used for evaluating speaker diarization results, other available flags are \texttt{detection} (speech activity detection), \texttt{segmentation} (speaker change detection), and \texttt{identification} (supervised speaker identification).
-These four flags correspond to the typical four modules used in  most speaker diarization systems, as depicted in Figure~\ref{fig:pipeline}.
+Not only can \cli{} command line tool be used to compute the diarization error rate using NIST implementation, one can also evaluate the typical four sub-modules used in  most speaker diarization systems~\cite{anguera2012speaker}, depicted in Figure~\ref{fig:pipeline}.
+Practically, the first positional argument (\emph{e.g.} \texttt{\footnotesize{diarization}} in Figure~\ref{vrb:cli}) is a flag indicating which task should be evaluated.
+Apart from the \texttt{\footnotesize{diarization}} flag that is used for evaluating speaker diarization results, other available flags are \texttt{\footnotesize{detection}} (speech activity detection), \texttt{\footnotesize{segmentation}} (speaker change detection), and \texttt{\footnotesize{identification}} (supervised speaker identification).
 Depending on the task, a different set of evaluation metrics is computed, which are listed in Section~\ref{sec:diagnostic}.
 
-\subsection{Multiple datasets and protocols}
+\subsection{Datasets and protocols}
 
-The second positional argument, along with the optional \texttt{--subset} argument, provides an easy way to ensure the same protocol (\emph{i.e.} manual groundtruth and training/development/test split) is used for evaluation.
-Internally, it relies on a collection of Python packages that all derive from the \texttt{pyannote.database} main package, that provides a convenient API to define training/development/test splits, along with groundtruth annotations.
-As of March 2017, \texttt{pyannote.database} packages exist for the ETAPE corpus~\cite{Gravier2012}, the REPERE corpus~\cite{giraudel_repere_2012, galibert_first_2013}, and the AMI corpus~\cite{Carletta2007}.
-As more people contribute new \texttt{pyannote.database} packages, they will be added to the \texttt{pyannote} ecosystem.
+\metrics{} provides an easy way to ensure the same protocol (\emph{i.e.} manual groundtruth and training/development/test split) is used for evaluation.
+Internally, it relies on a collection of Python packages that all derive from the \database{} main package, that provides a convenient API to define training/development/test splits, along with groundtruth annotations.
+As of March 2017, \database{} packages exist for the ETAPE corpus~\cite{Gravier2012}, the REPERE corpus~\cite{giraudel_repere_2012, galibert_first_2013}, and the AMI corpus~\cite{Carletta2007}.
+As more people contribute new \database{} packages, they will be added to the \pyannote{} ecosystem.
 In Figure~\ref{vrb:cli}, the development set of the \emph{TV} evaluation protocol of the ETAPE dataset is used.
-Results are both reported for each file in the selected subset, and aggregated into one final metric value (\emph{cf.} line starting with \texttt{TOTAL}).
+Results are both reported for each file in the selected subset, and aggregated into one final metric value (\emph{cf.} line starting with \texttt{\footnotesize{TOTAL}}).
 
-\subsection{Multiple supported formats}
+\subsection{File formats}
 
-The final positional argument is the path to the file that contains the output of the evaluated speaker diarization system.
-While the \texttt{MDTM}~\cite{NIST-RT03} file format is used in this example, several other file formats are available (and can be contributed) thanks to the internal use of the \texttt{pyannote.parser} package.
+While the \texttt{MDTM}~\cite{NIST-RT03} file format is used in this example, several other file formats are available (and can be contributed) thanks to the internal use of the \parser{} package.
 
 \section{Diagnostic}
 \label{sec:diagnostic}
@@ -114,7 +120,7 @@ Finally, an optional supervised classification step may be applied to actually i
 
 Looking at the final performance of the system is usually not enough for diagnostic purposes.
 In particular, it is often necessary to evaluate the performance of each module separately to identify their strenght and weakness, or to estimate the influence of their errors on the complete pipeline.
-This section provides the list of metrics that were implemented in \texttt{pyannote.metrics} with that very goal in mind.
+This section provides the list of metrics that were implemented in \metrics{} with that very goal in mind.
 
 \subsection{Detection}
 
@@ -133,7 +139,7 @@ In other words, overlapping speech regions are counted only once.
 \begin{figure}[htb]
   \centering
   \includegraphics[width=1.0\linewidth]{figures/segmentation.pdf}
-  \caption{Segmentation metrics available in \texttt{pyannote.metrics}}
+  \caption{Segmentation metrics available in \metrics{}}
   \label{fig:segmentation}
 \end{figure}
 
@@ -159,7 +165,7 @@ Note that this metric does take overlapping speech into account, potentially lea
 \subsubsection{``Optimal'' \emph{vs.} ``greedy''}
 
 Two implementations of the diarization error rate are available (optimal and greedy), depending on how the one-to-one mapping between reference and hypothesized speakers is computed.
-The \emph{optimal} version uses the Hungarian algorithm~\cite{Kuhn1955} to compute the mapping that minimize the $\texttt{confusion}$ term, while the \emph{greedy} version operates in a greedy manner, mapping reference and hypothesized speakers iteratively, by decreasing value of their cooccurrence duration.
+The \emph{optimal} version uses the Hungarian algorithm~\cite{Kuhn1955} to compute the mapping that minimize the confusion term, while the \emph{greedy} version operates in a greedy manner, mapping reference and hypothesized speakers iteratively, by decreasing value of their cooccurrence duration.
 In practice, the \emph{greedy} version is much faster than the \emph{optimal} one, especially for files with a large number of speakers -- though it may slightly over-estimate the value of the diarization error rate.
 
 \subsubsection{Purity and coverage}
@@ -195,7 +201,7 @@ Finally, CLR clustering brings an additional $+5\%$ coverage improvement.
 \subsection{Identification}
 
 In case prior speaker models are available, the speech turn clustering module in Figure~\ref{fig:pipeline} may be followed by a supervised speaker recognition module for cluster-wise supervised classification.
-\texttt{pyannote.metrics} also provides a collection of evaluation metrics for this identification task. This includes precision, recall, and identification error rate (IER):
+\metrics{} also provides a collection of evaluation metrics for this identification task. This includes precision, recall, and identification error rate (IER):
 
 \begin{equation*}
   \text{IER} = \frac{\text{false alarm} + \text{missed detection} + \text{confusion}}{\text{total}}
@@ -205,7 +211,7 @@ which is similar to the diarization error rate (DER) introduced previously, exce
 \subsection{Collar and evaluation map}
 
 Because manual annotations cannot be precise at the audio sample level, it is common in speaker diarization research to remove from evaluation a $500$ms collar around each speaker turn boundary ($250$ms before and after).
-Most of the metrics available in \texttt{pyannote.metrics} support a \emph{collar} parameter, which defaults to 0.
+Most of the metrics available in \metrics{} support a \emph{collar} parameter, which defaults to 0.
 
 Moreover, though audio files can always be processed entirely (from beginning to end), there are cases where reference annotations are only available for some regions of the audio files.
 All metrics support the provision of an \emph{evaluation map}~\cite{NIST-RT03} that indicate which part of the audio file should be evaluated.
@@ -225,7 +231,7 @@ Moreover, because they were designed for annotation purposes, they do not provid
   \label{fig:visualization}
 \end{figure}
 
-Because it internally relies on \texttt{pyannote.core} advanced visualization capabilities, \texttt{pyannote.metrics} addresses the first limitation. It can be used to visualize each step of any speaker diarization pipeline, without leaving the current Python or Jupyter Notebook~\cite{jupyter} environment.
+Because it internally relies on \core{}, advanced visualization capabilities, \metrics{} addresses the first limitation. It can be used to visualize each step of any speaker diarization pipeline, without leaving the current Python or Jupyter Notebook~\cite{jupyter} environment (see Appendix).
 Figure~\ref{fig:visualization} was obtained using this feature -- showing it can also be used to generate publication-quality figures.
 
 \begin{figure}[htb]
@@ -235,22 +241,36 @@ Figure~\ref{fig:visualization} was obtained using this feature -- showing it can
   \label{fig:segmentation_errors}
 \end{figure}
 
-Finally, \texttt{pyannote.metrics} also provides a few tools dedicated to the analysis of segmentation or diarization errors.
+Finally, \metrics{} also provides a few tools dedicated to the analysis of segmentation or diarization errors.
 Figure~\ref{fig:segmentation_errors} provides an example of segmentation error analysis.
 Given a reference and hypothesized segmentations, the third line is generated automatically and allows to quickly get insight at the type and location of segmentation errors.
 This example contains three errors: one boundary is not at the right location (\emph{shift} error), one boundary is missing (\emph{under-segmentation} error), and one segment is incorrecly split into two smaller ones (\emph{over-segmentation} error).
 
 \section{Conclusion}
 
-In this paper, we introduced \texttt{pyannote.metrics} an open-source Python library for reproducible evaluation, diagnostic, and error analysis of speaker diarization systems.
-Installation instructions, example notebooks, and documentation can be found on the dedicated website \url{pyannote.github.io}.
+In this paper, we introduced \metrics{} an open-source Python library for reproducible evaluation, diagnostic, and error analysis of speaker diarization systems. Installation instructions, example notebooks, and documentation can be found on the dedicated website: \github{}.
+
+The list of implemented metrics is obviously not exhaustive (especially as far as error analysis is concerned) and \metrics{} is meant to be community-driven. Contributions are welcome: additional metrics, documentation improvement, new \database{} packages, ...
+
+\section{Appendix}
+\label{sec:appendix}
+
+Figure~\ref{fig:notebook} showcases the integration with Jupyter Notebook, and provides a few examples of the \metrics{} object-oriented API.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=\linewidth]{figures/notebook.png}
+  \caption{Jupyter Notebook integration}
+  \label{fig:notebook}
+\end{figure}
 
 \section{Acknowledgements}
 
 This work was partly supported by ANR through
 the ODESSA (ANR-15-CE39-0010) and MetaDaTV (ANR-14-CE24-0024) projects.
 
-
+\newpage
+\balance
 \bibliographystyle{IEEEtran}
 \bibliography{mybib}
 
