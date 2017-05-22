@@ -114,10 +114,10 @@ While the \texttt{MDTM}~\cite{NIST-RT03} file format is used in this example, se
 \label{sec:diagnostic}
 
 A typical speaker diarization pipeline is depicted in Figure~\ref{fig:pipeline}.
-The first step is usually dedicated to speech activity detection, where the objective is to get rid of all non-speech regions.
+The first step is usually dedicated to speech activity detection, where the objective is to remove all non-speech regions.
 Then, speaker change detection aims at segmenting speech regions into homogeneous segments.
 The subsequent clustering step tries to group those speech segments according to the identity of the speaker.
-Finally, an optional supervised classification step may be applied to actually identity every speaker cluster in a supervised way.
+Finally, an optional supervised classification step may be applied to actually identify every speaker cluster in a supervised way.
 
 Looking at the final performance of the system is usually not enough for diagnostic purposes.
 In particular, it is often necessary to evaluate the performance of each module separately to identify their strenght and weakness, or to estimate the influence of their errors on the complete pipeline.
@@ -179,7 +179,7 @@ They are defined as follows:
    \text{purity} & = & \frac{\displaystyle \sum_{\text{cluster}} \max_{\text{speaker}} |\text{cluster} \cap \text{speaker}|  }{\displaystyle \sum_{\text{cluster}} |\text{cluster}|} \\
   \text{coverage} & = & \frac{\displaystyle \sum_{\text{speaker}} \max_{\text{cluster}} |\text{speaker} \cap \text{cluster}|  }{\displaystyle \sum_{\text{speaker}} |\text{speaker}|} \\
 \end{eqnarray*}
-where $|\text{speaker}|$ (respectively $|\text{cluster}|$ is the speech duration of this particular reference speaker (resp. hypothesized cluster), and  $|\text{speaker} \cap \text{cluster}|$ is the duration of their intersection.
+where $|\text{speaker}|$ (respectively $|\text{cluster}|$) is the speech duration of this particular reference speaker (resp. hypothesized cluster), and  $|\text{speaker} \cap \text{cluster}|$ is the duration of their intersection.
 Over-segmented results (\emph{e.g.} too many speaker clusters) tend to lead to high purity and low coverage, while under-segmented results (\emph{e.g.} when two speakers are merged into one large cluster) lead to low purity and higher coverage.
 
 \subsubsection{Use case}
